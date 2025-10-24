@@ -32,6 +32,8 @@ const CountryDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   //error check om en fetch misslyckas
   const [error, setError] = useState("");
+  // state för bilder
+  const [images, setImages] = useState<CountryImage[]>([]);
 
   useEffect(() => {
     const fetchCountry = async () => {
@@ -134,6 +136,36 @@ const CountryDetail: React.FC = () => {
             });
           }
         } catch {}
+        try {
+          const pexelsRes = await fetch(
+            `https://api.pexels.com/v1/search?query=${encodeURIComponent(
+              countryData.name
+            )}&per_page=3`,
+            {
+              headers: {
+                Authorization: import.meta.env.VITE_PEXELS_API_KEY,
+              },
+            }
+          );
+
+          if (pexelsRes.ok) {
+            const pexelsData = await pexelsRes.json();
+            if (pexelsData.photos && pexelsData.photos.length > 0) {
+              setImages(
+                pexelsData.photos.map((p: any) => ({
+                  url: p.src.medium,
+                  alt: p.alt || `Bild från ${countryData.name}`,
+                }))
+              );
+            } else {
+              setImages(placeholderImages);
+            }
+          } else {
+            setImages(placeholderImages);
+          }
+        } catch {
+          setImages(placeholderImages);
+        }
       } catch (err) {
         setError("Kunde inte hämta landets information. Försök igen.");
         //finally körs alltid för att ändra setloading
@@ -309,7 +341,7 @@ const CountryDetail: React.FC = () => {
           Bilder från landet
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {placeholderImages.map((img) => (
+          {images.map((img) => (
             <figure key={img.url} className="overflow-hidden rounded shadow">
               <img
                 src={img.url}

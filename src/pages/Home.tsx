@@ -141,7 +141,7 @@ const Home: React.FC = () => {
       {paginated.length === 0 ? (
         <p>Inga länder matchar dina kriterier.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="justify-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {paginated.map((country) => (
             <CountryCard key={country.cca3} country={country} />
           ))}
@@ -149,7 +149,7 @@ const Home: React.FC = () => {
       )}
 
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-4">
+        <div className="flex flex-wrap justify-center items-center gap-2 mt-4">
           <button
             onClick={() => setPage(page - 1)}
             disabled={page === 1}
