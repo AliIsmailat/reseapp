@@ -1,5 +1,6 @@
 //importerar stuff
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import CountryCard from "../components/CountryCard";
 import type { CountryData } from "../types/types";
 
@@ -15,20 +16,24 @@ const regions = [
 ];
 
 const Home: React.FC = () => {
-  //countries vars state kmr att vara countrydata
+  //countries vars typ är countrydata,
+  //är initially en tom array
   const [countries, setCountries] = useState<CountryData[]>([]);
   //loading thing
   const [loading, setLoading] = useState(true);
   //error för ev errors
   const [error, setError] = useState("");
-  //query: texten som användaren skriver för att söka
-  const [query, setQuery] = useState("");
-  //regioner, initial state kmr att vara "all"
-  const [region, setRegion] = useState("All");
-  //pages, börjar på 1
-  const [page, setPage] = useState(1);
   //hur många länder som visas per sida
   const pageSize = 12;
+  //NY KOD ⚠️⚠️
+  //URL parametrar läses och uppdateras här
+  const [searchParams, setSearchParams] = useSearchParams();
+  //hämtar värdet för query parametern med fallback
+  const query = searchParams.get("query") || "";
+  //hämtar värdet för region parametern med fallback
+  const region = searchParams.get("region") || "All";
+  //hämtar och värdet för sidonummer med fallback
+  const page = Number(searchParams.get("page") || 1);
 
   //useeffect för fetch på initial mount
   useEffect(() => {
@@ -95,19 +100,16 @@ const Home: React.FC = () => {
 
   const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
 
-  //kallar handleregionchange när användaren
-  //ändrar region + sätter page på 1
+  //kallar setsearchparams när användaren ändrar region
+  //setsearchparams sätter rätt värde i URL:en
   const handleRegionChange = (r: string) => {
-    setRegion(r);
-    setPage(1);
+    setSearchParams({ query, region: r, page: "1" });
   };
 
-  //kallar handlesearchchange när
-  //användaren skriver i fältet, ändrar state på
-  //query + sätter page på 1
+  //kallar setsearchparams när användaren ändrar region
+  //setsearchparams sätter värdet av sökfältet i URL:en
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-    setPage(1);
+    setSearchParams({ query: e.target.value, region, page: "1" });
   };
 
   if (loading) return <p className="p-4">Laddar...</p>;
@@ -151,16 +153,21 @@ const Home: React.FC = () => {
       {totalPages > 1 && (
         <div className="flex flex-wrap justify-center items-center gap-2 mt-4">
           <button
-            onClick={() => setPage(page - 1)}
+            onClick={() =>
+              setSearchParams({ query, region, page: String(page - 1) })
+            }
             disabled={page === 1}
             className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
           >
             Föregående
           </button>
+
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
-              onClick={() => setPage(i + 1)}
+              onClick={() =>
+                setSearchParams({ query, region, page: String(i + 1) })
+              }
               className={`px-3 py-1 rounded ${
                 page === i + 1 ? "bg-blue-600 text-white" : "bg-gray-200"
               }`}
@@ -168,8 +175,11 @@ const Home: React.FC = () => {
               {i + 1}
             </button>
           ))}
+
           <button
-            onClick={() => setPage(page + 1)}
+            onClick={() =>
+              setSearchParams({ query, region, page: String(page + 1) })
+            }
             disabled={page === totalPages}
             className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
           >
