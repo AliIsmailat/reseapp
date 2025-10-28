@@ -2,18 +2,28 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-100 mt-10">
+    // <footer className="bg-gray-100 mt-10">
+    <footer className="w-full bg-gradient-to-r from-indigo-500/80 to-cyan-500/80 backdrop-blur-md text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col items-center md:flex-row md:justify-center md:items-center text-gray-600">
         <p className="text-sm mb-2 md:mb-0 text-center md:text-left"></p>
 
         <div className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-4">
-          <a href="/" className="text-sm hover:text-blue-600">
+          <a
+            href="/"
+            className="text-sm text-white hover:text-blue-600 transition duration-200"
+          >
             Filler 1
           </a>
-          <a href="/" className="text-sm hover:text-blue-600">
+          <a
+            href="/"
+            className="text-sm text-white hover:text-blue-600 transition duration-200"
+          >
             Filler 2
           </a>
-          <a href="/" className="text-sm hover:text-blue-600">
+          <a
+            href="/"
+            className="text-sm text-white hover:text-blue-600 transition duration-200"
+          >
             Filler 3
           </a>
         </div>

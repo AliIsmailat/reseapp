@@ -22,7 +22,7 @@ const CountryDetail: React.FC = () => {
 
   const navigate = useNavigate();
 
-  //data om lander
+  //data om länder
   const [country, setCountry] = useState<CountryData | null>(null);
   //data om väder
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -237,7 +237,7 @@ const CountryDetail: React.FC = () => {
       <div className="mb-4">
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded transition"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-200 rounded transition duration-200"
           aria-label="Gå tillbaka"
         >
           ← Tillbaka
@@ -322,7 +322,7 @@ const CountryDetail: React.FC = () => {
       {weather && (
         <section
           aria-labelledby="weather-heading"
-          className="mt-6 p-4 rounded shadow bg-blue-50"
+          className="mt-6 p-4 rounded shadow bg-white"
         >
           <h2 id="weather-heading" className="text-lg font-semibold mb-2">
             Aktuellt väder
@@ -357,7 +357,7 @@ const CountryDetail: React.FC = () => {
       {wiki && (
         <article
           aria-labelledby="about-heading"
-          className="mt-6 p-4 bg-gray-50 rounded shadow"
+          className="mt-6 p-4 bg-white rounded shadow"
         >
           <h2 id="about-heading" className="text-lg font-semibold mb-2">
             Om {country.name}

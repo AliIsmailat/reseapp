@@ -116,7 +116,8 @@ const Home: React.FC = () => {
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
   return (
-    <main className="p-4 max-w-7xl mx-auto">
+    // <main className="p-4 max-w-7xl mx-auto">
+    <main className="flex-grow p-4 max-w-7xl mx-auto flex flex-col justify-center items-center gap-4">
       <input
         type="text"
         placeholder="Sök land..."
@@ -132,7 +133,9 @@ const Home: React.FC = () => {
             key={r}
             onClick={() => handleRegionChange(r)}
             className={`px-4 py-2 rounded ${
-              region === r ? "bg-blue-600 text-white" : "bg-gray-200"
+              region === r
+                ? "bg-blue-600 text-white"
+                : "bg-white hover:bg-gray-200 transition duration-200"
             }`}
           >
             {r}
@@ -157,7 +160,7 @@ const Home: React.FC = () => {
               setSearchParams({ query, region, page: String(page - 1) })
             }
             disabled={page === 1}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            className="px-3 py-1 border shadow-md bg-white rounded disabled:opacity-50"
           >
             Föregående
           </button>
@@ -169,7 +172,9 @@ const Home: React.FC = () => {
                 setSearchParams({ query, region, page: String(i + 1) })
               }
               className={`px-3 py-1 rounded ${
-                page === i + 1 ? "bg-blue-600 text-white" : "bg-gray-200"
+                page === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-white hover:bg-gray-200 border shadow-md transition duration-200"
               }`}
             >
               {i + 1}
@@ -181,7 +186,7 @@ const Home: React.FC = () => {
               setSearchParams({ query, region, page: String(page + 1) })
             }
             disabled={page === totalPages}
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            className="px-3 py-1 bg-white rounded disabled:opacity-50"
           >
             Nästa
           </button>

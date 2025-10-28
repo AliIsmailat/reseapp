@@ -31,7 +31,7 @@ const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
   return (
     <div
       onClick={handleClick}
-      className="cursor-pointer bg-white rounded shadow hover:shadow-lg p-4 flex flex-col"
+      className="cursor-pointer border border-gray-300 bg-white rounded shadow-lg hover:shadow-2xl p-4 flex flex-col transition duration-300"
     >
       <img
         src={country.flagUrl}
